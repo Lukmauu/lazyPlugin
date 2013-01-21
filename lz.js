@@ -24,15 +24,23 @@
                 // Check if the Array() works
                 $.isArray(obj)?c('yes isso e um Array'):c('no isso nao e um Array')
                     // Loop args var and .push() inside the obj Array[]
-                    for(var i=1;i<args.length;i++){
-                        if(typeof args[i] == 'function'){
-                            callback=args[i];
-                            callback.call(this);
-                        }else{
+                    //for(var i=1;i<args.length;i++){
+                        //if(typeof args[i] == 'function'){
+                            //callback=args[i];
+                            //callback.call(this);
+                        //}else{
                         // Make the new Array[]
-                        obj.push(args[i]);
+                        //obj.push(args[i]);
+                        //}
+                    //}// End of the for loop
+                    $.each(args,fucntion(index,value)){
+                        if(typeof value == 'fucntion'){
+                            callback=value;
+                        }else{
+                            obj.push(value);
                         }
-                    }// End of the for loop
+                    }
+                    
             } 
             c(typeof callback);
             c(callback)
