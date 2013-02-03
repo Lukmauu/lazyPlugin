@@ -2,6 +2,7 @@
     
     jQuery.fn.lz=function(obj,callback){
         
+        
         /*I save that var the check if least one thing
         is coming on the Function(){} 
         */
