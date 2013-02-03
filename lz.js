@@ -1,15 +1,15 @@
 (function($){
-
-
+    
+    jQuery.fn.lz=function(obj,callback){
         
-jQuery.fn.lz=function(obj,callback){
-        
-        
-                var first=obj;
+        /*I save that var the check if least one thing
+        is coming on the Function(){} 
+        */
+        var first=obj;
 
     
 
-
+// All the arrays nedded in this Function(){}
 var ef=['fade','explode','slide','fold','blind',
                         'clip','drop','puff','scale'],
     ea=['swing','linear','Quad','Cubic','Quart',
@@ -22,38 +22,56 @@ var ef=['fade','explode','slide','fold','blind',
                         'easeInBounce','easeOutBounce','easeInOutBounce','easeInBack','easeOutBack',
                         'easeInOutBack','easeInSine','easeOutSine','easeInOutSine','swing','linear'];
   
+    // If is a Array that is coming obj is obj and that is it
+    /* like $(this).lz([ 's' , 's' , 'l' ], function(){ callback }) */
     if($.isArray(obj)) obj=obj;
     
+    // If not continue
     else{
 
-        
+        // Last check if come something on the Function(){}
         if(obj||first!=='undefined'){
+            
+            // As something came
+            // It must be on argumentes Object
+            // So turn it into a Array and Loop 
             var args=Array.prototype.slice.call(arguments);
                 
+                // Transforme obj into a Array[]
                 obj=new Array;
             
             for(var i=0;i<args.length+1;i++){
+                /*Loop through arguments as args var 
+                 * and in is a Function on it put it on callback
+                 * and the rest just push into obj Array[]
+                 **/
                 typeof args[i]=='function'?callback=args[i]:obj.push(args[i]);
             }
         }
-    }//need all closes!!!
+    }//needed all closes!!!
     
+    // create a function inside all Arrays to check and clean for 
+    // empty values
     Array.prototype.clean=function(deleteValue){
         for(var i=0;i<this.length;i++){
+            // if there is function inside this
+            // take it out
             if(this[i]==deleteValue&&typeof this[i]!=='function'){this.splice(i,1);i--;}
             else if(typeof this[i]=='function'){this.splice(i,1);i--;}}
         return this;};
         
-    var t=this,
-        off=50,/* THIS IS AFTER THEN CALLBACK */
-        cIA=0,
-        f,d,e,s,
-        sw=false,
-        hd=false,
-        empty;
+    var t=this, // This
+        off=50,/* SOME TIME after the main function end the call callback */
+        cIA=0, // var that helps the auxiliar function
+        f,d,e,s, // our main vars
+        sw=false, // for show method
+        hd=false, // for hide method
+        empty; // to decide which method will be
+        // toggle is the method default
     
     if(obj){
-      
+        // if ibj has some
+      // then clean it up dummy values
         
         obj.clean(undefined);
         obj.clean(null);
@@ -62,7 +80,7 @@ var ef=['fade','explode','slide','fold','blind',
         
 
     $.each(obj,function(i,v){
-        
+        // loop in obj Array[]
         if(typeof v=='number')s=v;
         else if(v=='sh'||v=='show')sw=true;
         else if(v=='hd'||v=='hide')hd=true;
@@ -73,20 +91,6 @@ var ef=['fade','explode','slide','fold','blind',
 
     });
     }
-//    if(f===0||f===false){
-//        jQuery.fn.msgErro(4,'value of Effect is not valid');
-//        return;
-//    }
-//    if(d===0||d===false){
-//        jQuery.fn.msgErro(4, 'value of Direction is not valid');
-//        return;
-//    }
-//    if(e===0||e===false){
-//        jQuery.fn.msgErro(4, 'value of Easing is not valid');
-//        return;
-//    }
-    /* LAST CHECK */
-        
         off+=s;/* IMPORTAMT VAR */
         
         sw==true?empty='show':hd==true?empty='hide':empty='toggle';
@@ -103,12 +107,6 @@ var ef=['fade','explode','slide','fold','blind',
             eval( 't.' +empty+ '({' +f +d +e +s+ '})' );
             
             
-            
-//            if(typeof callback=='function'){
-//                function callCallback(callback){
-//                    callback.call(this);
-//                }(window.setTimeout(function(){callCallback(callback);},(off)));
-//            }
             if(typeof callback=='function'){
                 window.setTimeout(function(){callback.call(this);},(off));
             }
@@ -120,6 +118,7 @@ var ef=['fade','explode','slide','fold','blind',
     /* END RETURN */
 
 /* START FUNCTIONS() */
+/* Function(){} that will check almost all the values less the easing value */
 function all(ar,vl){
     for(var ix=0;ix<ar.length;ix++){
         if(vl==ar[ix].slice(0,1)||vl==ar[ix].slice(0,2)||vl==ar[ix]){
@@ -129,46 +128,6 @@ function all(ar,vl){
     }
     if(cIA!==0&&cIA===1){cIA=0;return vl;}else return 0;
 }
-
-//function checkF(eff){
-//    $.each(ef,function(i,v){
-//        if(eff==v[0][0]||eff==v.slice(0,2)||eff==v){
-//            f=v;
-//                cIA=1;
-//        }
-//    });
-//    if(cIA!==0&&cIA===1){cIA=0;return d;}
-//    else return 0;
-//}
-//
-//
-//function checkD(d){
-//    $.each(di, function(i,v){
-//        if(d==v[0][0]||d==v.slice(0,2)||d==v.slice(0,v.length)){
-//            d=v;
-//                    cIA=1;
-//            }
-//        });
-//        if(cIA!==0&&cIA===1){cIA=0;return d;}
-//        else return 0;
-//}
-//
-//
-//function check(t){
-//    $.each(ea,function(i,v){
-//        if(t==v.slice(0,1)||t==v.slice(0,2)||t==v){
-//            t=v;
-//                cIA=1;
-//        }
-//    });
-//    if(cIA!==0&&cIA===1){
-//        cIA=0;return t;
-//    }else{
-//        return 0;
-//    }
-//}//end of function check
-
-
 
 
 function checkE(e){
