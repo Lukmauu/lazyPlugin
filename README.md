@@ -22,3 +22,13 @@ With the Lazy Plugin it will be:
         });
 
 It in any ordem.
+
+I am a beginner I learned JavaScript and jQuery and I really the Object Notation that,
+we can find in any jQuery Plugin, however it is not for me.
+
+So you can type just the first letter of the effect and kabum all done.
+
+
+
+
+
