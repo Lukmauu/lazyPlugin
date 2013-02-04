@@ -2,7 +2,6 @@
     
     jQuery.fn.lz=function(obj,callback){
         
-        
         /*I save that var the check if least one thing
         is coming on the Function(){} 
         */
@@ -11,12 +10,12 @@
     
 
 // All the arrays nedded in this Function(){}
-var ef=['fade','explode','slide','fold','blind',
+var effect=['fade','explode','slide','fold','blind',
                         'clip','drop','puff','scale'],
-    ea=['swing','linear','Quad','Cubic','Quart',
+    easing=['swing','linear','Quad','Cubic','Quart',
                         'Sine','Expo','Quint','Circ','Elastic','Back','Bounce'],
-    di=new Array('up','down','right','left','vertical','horizontal'),
-    iC=['easeInQuad','easeOutQuad','easeInOutQuad','easeInCubic','easeOutCubic','easeInOutCubic',
+    direction=new Array('up','down','right','left','vertical','horizontal'),
+    easingDoubleCheck=['easeInQuad','easeOutQuad','easeInOutQuad','easeInCubic','easeOutCubic','easeInOutCubic',
                         'easeInQuart','easeOutQuart','easeInOutQuart','easeInExpo','easeOutExpo',
                         'easeInOutExpo','easeInQuint','easeOutQuint','easeInOutQuint','easeInCirc',
                         'easeOutCirc','easeInOutCirc','easeInElastic','easeOutElastic','easeInOutElastic',
@@ -82,35 +81,123 @@ var ef=['fade','explode','slide','fold','blind',
 
     $.each(obj,function(i,v){
         // loop in obj Array[]
-        if(typeof v=='number')s=v;
-        else if(v=='sh'||v=='show')sw=true;
-        else if(v=='hd'||v=='hide')hd=true;
-        else if(!d&&all(di,v)){d=all(di,v);return;}
-        else if(!f&&all(ef,v)){f=all(ef,v);return;}
-        else if(!e&&checkE(v))e=checkE(v);
+        if(typeof v=='number'){
+            s=v;
+        }
+        else if(v=='sh'||v=='show'){
+            sw=true;
+        }
+        else if(v=='hd'||v=='hide'){
+            hd=true;
+        }
+        /* check first the var and if does not work skip 
+         * the evaluation of the Function(){} */
+        else if(!d&&all(direction,v)){
+            d=all(direction,v);
+            return;
+            /* This two returns are necessy, because the plan set up 
+             * its var only one time to in cases when type ( 's' , 's' )
+             * came up easing: 'swing', and effect: 'scale' */
+        }
+        else if(!f&&all(effect,v)){
+            f=all(effect,v);
+            return;
+        }
+        else if(!e&&checkE(v)){
+            e=checkE(v);
+        }
         
 
     });
     }
-        off+=s;/* IMPORTAMT VAR */
+        off+=s;/* This is the duration time plus half second 
+               * This is the time the callback will wait to start
+               * */
         
-        sw==true?empty='show':hd==true?empty='hide':empty='toggle';
-        callback&&typeof callback=='function'?callback=callback:callback=''; 
-        s?e||d||f?s=',duration:'+s:s='duration:'+s:s='';
-        e?d||f?e=',easing:\''+e+'\'':e='easing:\''+e+'\'':e='';
-        d?f?d=',direction:\''+d+'\'':d='direction:\''+d+'\'':d='';
-        f?f='effect:\''+f+'\'':f='';
-    /* LAST CHECK */
+        if(sw==true){/*
+                        Check sh = 'show' and hd = 'hide'
+                        if nothing the default method is toggle({});
+                   *           **/
+            empty='show';
+        }
+        else if(hd==true){
+            empty='hide';
+        }else{
+            empty='toggle';
+        }
+        
+             
+        
+        
+        if(callback&&typeof callback=='function'){/*
+                Check if callback is a function
+                it was decided up in the code
+                   *           **/
+            callback=callback
+        }
+        else{
+            /* If no callback it turns in one empty String */
+            callback='';
+        } 
+        /* 
+         *  Continue checking the letters 
+         *  and need to decide if needs comma or not 
+         *  and if the letter is undefined sets a empty String 
+         *    */
+        if(s){
+            if(e||d||f){
+                s=',duration:'+s
+            }else{
+                s='duration:'+s
+            }
+        }
+        else{
+            s='';
+        }
+        
+        if(e){
+            if(d||f){
+                e=',easing:\''+e+'\'';
+            }else{
+                e='easing:\''+e+'\''
+            }
+        }
+        else{
+            e='';
+        }
+        
+        if(d){
+            if(f){
+                d=',direction:\''+d+'\'';
+            }else{
+                d='direction:\''+d+'\'';
+            }
+        }
+        else{
+            d='';
+        }
+        if(f){
+            f='effect:\''+f+'\'';
+        }
+        else{
+            f='';
+        }/* end of the letters check up */
+        /* LAST CHECK */
     
     /* START RETURN */
     return t.each(function(){
-        console.log(f +"   "+ d +"   "+ e  +"   "+  s +"   "+ callback +'   '+empty);
+        //console.log(f +"   "+ d +"   "+ e  +"   "+  s +"   "+ callback +'   '+empty);
+           //If you want to test use this console line
+           
             eval( 't.' +empty+ '({' +f +d +e +s+ '})' );
-            
+            /* After this eval everthing turns true 
+             * the empty will turn into a method
+             * and the letters will be the objects parameters 
+             * if theirs any the method will be in default as set in jQuery */
             
             if(typeof callback=='function'){
                 window.setTimeout(function(){callback.call(this);},(off));
-            }
+            }/* if their is callback trigger after the method */
             
             
             
@@ -202,3 +289,5 @@ function checkE(e){
 //function c(m){return console.log(m);}
 /* END FUNCTIONS() */
 }})(jQuery);
+
+
